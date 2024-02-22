@@ -79,7 +79,7 @@ const Index = () => {
             <Text fontSize="2xl">{post.votes}</Text>
           </Box>
           <Spacer />
-          <Text flex={1} textAlign="center">
+          <Text flex={1} textAlign="left">
             {post.content}
           </Text>
           <Spacer />
