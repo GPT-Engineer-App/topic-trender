@@ -78,9 +78,7 @@ const Index = () => {
           <Box borderRadius="full" p={1} bg="gray.100" display="inline-flex" alignItems="center" justifyContent="center" width="100px">
             <Text fontSize="2xl">{post.votes}</Text>
           </Box>
-          <Spacer />
           <IconButton icon={<FaArrowUp />} aria-label="Upvote" colorScheme={userVotes[post.id] ? "green" : undefined} onClick={() => vote(post.id)} />
-          <Spacer />
           <Text flex={1} textAlign="left">
             {post.content}
           </Text>
