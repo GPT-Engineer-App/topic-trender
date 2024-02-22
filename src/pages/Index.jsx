@@ -24,10 +24,8 @@ const Index = () => {
   const toast = useToast();
 
   const vote = (postId) => {
-    const currentVote = userVotes[postId];
-    const newVote = currentVote === 1 ? 0 : 1;
-    setUserVotes({ ...userVotes, [postId]: newVote });
-    setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + (newVote - currentVote) } : post)));
+    setUserVotes({ ...userVotes, [postId]: 1 });
+    setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + 1 } : post)));
   };
 
   const addTopic = () => {
