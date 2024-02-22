@@ -75,7 +75,7 @@ const Index = () => {
       .sort((a, b) => b.votes - a.votes)
       .map((post) => (
         <HStack key={post.id} p={2} borderBottom="1px" borderColor="gray.200">
-          <Box borderRadius="full" p={1} bg="gray.100" display="inline-flex" alignItems="center" justifyContent="center">
+          <Box borderRadius="full" p={1} bg="gray.100" display="inline-flex" alignItems="center" justifyContent="center" width="100px">
             <Text fontSize="2xl">{post.votes}</Text>
           </Box>
           <Spacer />
