@@ -17,10 +17,18 @@ const initialPosts = [
 const Index = () => {
   const [topics, setTopics] = useState(initialTopics);
   const [posts, setPosts] = useState(initialPosts);
+  const [userVotes, setUserVotes] = useState({});
   const [newTopic, setNewTopic] = useState("");
   const [newPost, setNewPost] = useState("");
   const [selectedTopic, setSelectedTopic] = useState(null);
   const toast = useToast();
+
+  const vote = (postId, delta) => {
+    if (userVotes[postId] === undefined) {
+      setUserVotes({ ...userVotes, [postId]: delta });
+      setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + delta } : post)));
+    }
+  };
 
   const addTopic = () => {
     if (!newTopic) return;
@@ -47,10 +55,6 @@ const Index = () => {
     const newPostObj = { id: Date.now(), topicId: selectedTopic, content: newPost, votes: 0 };
     setPosts([...posts, newPostObj]);
     setNewPost("");
-  };
-
-  const vote = (postId, delta) => {
-    setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + delta } : post)));
   };
 
   const TopicTags = () => {
