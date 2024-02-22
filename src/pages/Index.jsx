@@ -23,11 +23,11 @@ const Index = () => {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const toast = useToast();
 
-  const vote = (postId, delta) => {
-    if (userVotes[postId] === undefined) {
-      setUserVotes({ ...userVotes, [postId]: delta });
-      setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + delta } : post)));
-    }
+  const vote = (postId) => {
+    const currentVote = userVotes[postId];
+    const newVote = currentVote === 1 ? 0 : 1;
+    setUserVotes({ ...userVotes, [postId]: newVote });
+    setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + (newVote - currentVote) } : post)));
   };
 
   const addTopic = () => {
@@ -52,7 +52,7 @@ const Index = () => {
       });
       return;
     }
-    const newPostObj = { id: Date.now(), topicId: selectedTopic, content: newPost, votes: 0 };
+    const newPostObj = { id: Date.now(), topicId: selectedTopic, content: newPost, votes: 0, userVote: 0 };
     setPosts([...posts, newPostObj]);
     setNewPost("");
   };
@@ -72,9 +72,9 @@ const Index = () => {
       .sort((a, b) => b.votes - a.votes)
       .map((post) => (
         <HStack key={post.id} p={2} borderBottom="1px" borderColor="gray.200">
-          <IconButton icon={<FaArrowUp />} aria-label="Upvote" onClick={() => vote(post.id, 1)} />
+          <IconButton icon={<FaArrowUp />} aria-label="Upvote" colorScheme={userVotes[post.id] === 1 ? "green" : undefined} onClick={() => vote(post.id)} />
           <Text fontSize="2xl">{post.votes}</Text>
-          <IconButton icon={<FaArrowDown />} aria-label="Downvote" onClick={() => vote(post.id, -1)} />
+
           <Text>{post.content}</Text>
         </HStack>
       ));
