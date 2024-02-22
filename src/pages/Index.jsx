@@ -24,8 +24,13 @@ const Index = () => {
   const toast = useToast();
 
   const vote = (postId) => {
-    setUserVotes({ ...userVotes, [postId]: 1 });
-    setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + 1 } : post)));
+    if (userVotes[postId]) {
+      setUserVotes({ ...userVotes, [postId]: 0 });
+      setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes - 1 } : post)));
+    } else {
+      setUserVotes({ ...userVotes, [postId]: 1 });
+      setPosts(posts.map((post) => (post.id === postId ? { ...post, votes: post.votes + 1 } : post)));
+    }
   };
 
   const addTopic = () => {
@@ -70,7 +75,7 @@ const Index = () => {
       .sort((a, b) => b.votes - a.votes)
       .map((post) => (
         <HStack key={post.id} p={2} borderBottom="1px" borderColor="gray.200">
-          <IconButton icon={<FaArrowUp />} aria-label="Upvote" colorScheme={userVotes[post.id] === 1 ? "green" : undefined} onClick={() => vote(post.id)} />
+          <IconButton icon={<FaArrowUp />} aria-label="Upvote" colorScheme={userVotes[post.id] ? "green" : undefined} onClick={() => vote(post.id)} />
           <Text fontSize="2xl">{post.votes}</Text>
 
           <Text>{post.content}</Text>
